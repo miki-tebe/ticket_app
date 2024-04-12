@@ -1,0 +1,23 @@
+---
+import { db, eq, Ticket } from "astro:db";
+
+export async function getStaticPaths() {
+  const tickets = await db.select().from(Ticket);
+  return [
+    ...tickets.map((ticket) => ({ params: { id: ticket.id.toString() } })),
+  ];
+}
+
+const { id } = Astro.params;
+const ticket = await db
+  .select()
+  .from(Ticket)
+  .where(eq(Ticket.id, Number(id)))
+  .limit(1);
+---
+
+<h1>
+  Ticket {ticket[0].id}: {ticket[0].owner} - {ticket[0].transactionId}
+</h1>
+<img src="/ticket.jpg" width="500" height="300" alt="" srcset="">
+<img src=`https://api.qrserver.com/v1/create-qr-code/?data=${ticket[0].transactionId}&amp;size=100x100` alt="" title="" style="position: absolute; top: 180px; left: 375px;" />

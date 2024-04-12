@@ -1,0 +1,28 @@
+---
+// import { db, eq, Ticket } from "astro:db";
+
+// const ticket = await db
+//   .update(Ticket)
+//   .set({ isUsed: true })
+//   .where(eq(Ticket.transactionId, decodedText));
+---
+
+<script>
+  import { Html5QrcodeScanner } from "html5-qrcode";
+  async function onScanSuccess(decodedText: string) {
+    alert(`${decodedText} is now used!`);
+    return window.location.replace(`/mark/${decodedText}`);
+  }
+
+  const onScanFailure = () => {};
+
+  let html5QrcodeScanner = new Html5QrcodeScanner(
+    "reader",
+    { fps: 10, qrbox: { width: 250, height: 250 } },
+    /* verbose= */ false
+  );
+  html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+</script>
+
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<div id="reader" style={{ width: "600px" }}></div>

@@ -1,0 +1,32 @@
+---
+import { db, eq, Ticket } from "astro:db";
+
+export async function getStaticPaths() {
+  const tickets = await db.select().from(Ticket);
+  return [
+    ...tickets.map((ticket) => ({
+      params: { id: ticket.transactionId },
+    })),
+  ];
+}
+
+const { id } = Astro.params;
+const ticket = await db
+  .select()
+  .from(Ticket)
+  .where(eq(Ticket.transactionId, id))
+  .limit(1);
+const isUsed = ticket[0].isUsed;
+await db
+  .update(Ticket)
+  .set({ isUsed: true })
+  .where(eq(Ticket.transactionId, id));
+---
+
+{
+  isUsed ? (
+    <h1>This ticket has already been used</h1>
+  ) : (
+    <h1>Thank you for using this ticket</h1>
+  )
+}
