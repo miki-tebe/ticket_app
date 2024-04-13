@@ -1,22 +1,13 @@
 ---
-import "@/styles/global.css";
 import { db, Ticket } from "astro:db";
 import TicketTable from "@/components/TicketTable";
+import Layout from "@/layouts/Layout.astro";
 
 const tickets = await db.select().from(Ticket);
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <div class="container mx-auto py-10">
-      <TicketTable data={tickets} client:load />
-    </div>
-  </body>
-</html>
+<Layout title="Tickets" description="A list of all tickets in the system.">
+  <div class="container mx-auto py-10">
+    <TicketTable data={tickets} client:load />
+  </div>
+</Layout>
