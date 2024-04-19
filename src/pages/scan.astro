@@ -32,6 +32,11 @@ import Layout from "@/layouts/Layout.astro";
 
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
   <div class="container mx-auto flex flex-col items-center justify-center">
-    <div id="reader" style={{ width: "600px" }}></div>
+    <h1 class="text-4xl font-bold text-center mt-8 mb-4">Scan QR Code</h1>
+    <div
+      id="reader"
+      class="w-80 mx-5 md:w-[600px] border-2 border-gray-300 rounded-lg"
+    >
+    </div>
   </div>
 </Layout>
