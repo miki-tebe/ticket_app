@@ -7,7 +7,8 @@ const tickets = await db.select().from(Ticket);
 ---
 
 <Layout title="Tickets" description="A list of all tickets in the system.">
-  <div class="container mx-auto py-10">
+  <div class="mx-5 md:mx-40 py-10">
+    <h1 class="text-xl font-bold py-3">User List ({tickets?.length})</h1>
     <TicketTable data={tickets} client:load />
   </div>
 </Layout>
